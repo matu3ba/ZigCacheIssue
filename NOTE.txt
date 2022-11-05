@@ -1,0 +1,24 @@
+Two subdirectories:
+
+   Intermittent_Success:  appears to arbitrarily fail or succeed.
+   
+   Constant_Success:  appears to never fail.
+                      (Contents are same as directory Intermittent_Success except
+                      that all references/usage of function "beta" is removed)
+
+Steps to witness failure:
+
+   1) change directory to "Intermittent_Success/major".
+
+   2) repeatedly clear zig-cache followed by running "zig build test".
+
+      Some tests will fail with: "error: no package named 'minor' available ..."
+
+      Occasionally result is: "All 4 tests passed."
+
+      a - after a failure, sometime success is more quickly acheived by
+          re-running "zig build test" without clearing zig-cache.
+
+      b - when stubbornly failing ... try "zig build test ; zig build test",
+          there appears to be timing involved.
+
