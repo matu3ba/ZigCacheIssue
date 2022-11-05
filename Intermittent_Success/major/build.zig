@@ -3,12 +3,11 @@ const Builder = std.build.Builder;
 const Pkg = std.build.Pkg;
 
 const pkgs = struct {
-
-    const major = Pkg {
+    const major = Pkg{
         .name = "major",
         .source = .{ .path = "./major.zig" },
-        .dependencies = &[_]Pkg {
-            Pkg {
+        .dependencies = &[_]Pkg{
+            Pkg{
                 .name = "minor",
                 .source = .{ .path = "../minor/minor.zig" },
                 .dependencies = null,
@@ -18,7 +17,6 @@ const pkgs = struct {
 };
 
 pub fn build(b: *std.build.Builder) void {
-
     const target = b.standardTargetOptions(.{});
     const mode = b.standardReleaseOptions();
 
