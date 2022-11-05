@@ -24,18 +24,13 @@ pub fn beta(x: anytype) bool {
 
 // --- TESTS -----------------------------
 
-test "\t beta \t  array\n" {
+test "beta array" {
     const T = f64;
-
     const n = 8;
-
     var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
     defer arena.deinit();
     const allocator = arena.allocator();
-
     var x = try allocator.alloc(T, n);
-
     var result = major.beta(x);
-
     try std.testing.expectEqual(result, true);
 }
