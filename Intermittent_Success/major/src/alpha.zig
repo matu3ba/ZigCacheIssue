@@ -20,21 +20,6 @@ pub fn alpha(x: anytype) bool {
 }
 
 
-test "\t alpha \t slice\n" {
-
-    const T = f64;
-
-    var arena = std.heap.ArenaAllocator.init(std.testing.allocator);
-    defer arena.deinit();
-    const allocator = arena.allocator();
-
-    var x = try allocator.alloc(T, 4);
-
-    var result = major.alpha(x);
-
-    try std.testing.expectEqual(result, true);
-}
-
 test "\t alpha \t  foo\n" {
 
     const T = f64;
