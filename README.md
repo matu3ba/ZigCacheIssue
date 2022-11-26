@@ -63,5 +63,17 @@ Constant_Sucess:
 ma/build
 pkg ma (ma/ma), mi(mi/mi)
 ma/main_test ─► ma/src/alpha ─► ma/ma ┬► Foo = mi/mi.Foo ─► mi/mi.Foo = mi/src/foo.Foo ─► mi/src/foo: pub fn Foo
-                                      └► alpha = ma/src/alpha.alpha (does not exist)
+                                      └► alpha = ma/src/alpha.alpha (does not exist, but unused)
+```
+
+Intermittent_Success:
+```
+ma/build                             ┌────┐
+pkg ma (ma/ma), mi(mi/mi)            │    ▼
+ma/main_test ┬► ma/src/alpha ─► ma/ma│┬► Foo = mi/mi.Foo ─► mi/mi.Foo = mi/src/foo.Foo ─► mi/src/foo: pub fn Foo
+             │                       │└► alpha = ma/src/alpha.alpha (does not exist, but unused)
+             │                       └─────┬
+             └► ma/src/beta   Foo = ma/ma.Foo, pub fn beta
+                              ▲                        │
+                              └────────────────────────┘
 ```
