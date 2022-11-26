@@ -43,7 +43,7 @@ diff -r Constant_Success/major/main_test.zig Intermittent_Success/major/main_tes
 2a3
 >     _ = @import("src/beta.zig");
 diff -r Constant_Success/major/major.zig Intermittent_Success/major/major.zig
-4a5
+2a3
 > pub const beta = @import("src/beta.zig").beta;
 Only in Intermittent_Success/major/src: beta.zig.
 ```
@@ -62,8 +62,7 @@ Constant_Sucess:
 ```
 ma/build
 pkg ma (ma/ma), mi(mi/mi)
-ma/main_test ─► ma/src/alpha ─► ma/ma ┬► Foo = mi/mi.Foo ─► mi/mi.Foo = mi/src/foo.Foo ─► mi/src/foo: pub fn Foo
-                                      └► alpha = ma/src/alpha.alpha (does not exist, but unused)
+ma/main_test ─► ma/src/alpha ─► ma/ma ─► Foo = mi/mi.Foo ─► mi/mi.Foo = mi/src/foo.Foo ─► mi/src/foo: pub fn Foo
 ```
 
 Intermittent_Success:
@@ -71,9 +70,16 @@ Intermittent_Success:
 ma/build                             ┌────┐
 pkg ma (ma/ma), mi(mi/mi)            │    ▼
 ma/main_test ┬► ma/src/alpha ─► ma/ma│┬► Foo = mi/mi.Foo ─► mi/mi.Foo = mi/src/foo.Foo ─► mi/src/foo: pub fn Foo
-             │                       │└► alpha = ma/src/alpha.alpha (does not exist, but unused)
-             │                       └─────┬
-             └► ma/src/beta   Foo = ma/ma.Foo, pub fn beta
-                              ▲                        │
-                              └────────────────────────┘
+             │                       │└► beta = src/beta.beta
+             │                       └─────┐             │
+             │                             │             │
+             │                             │             ▼
+             └► ma/src/beta ─► Foo = ma/ma.Foo, pub fn beta
+                                ▲                        │using Foo internally
+                                └────────────────────────┘
 ```
+
+Further observation:
+Adding `pub const alpha = @import("src/alpha.zig").alpha` to
+`Intermittent_Success/major/major.zig` does not create an error message such that
+`ma/src/alpha.alpha` does not exist.
