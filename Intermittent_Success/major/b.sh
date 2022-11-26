@@ -5,7 +5,6 @@ fail_cnt=0
 succ_cnt=0
 trap 'echo "succ_cnt: $succ_cnt, fail_cnt: $fail_cnt"' EXIT HUP QUIT SIGSEGV TERM
 
-
 # Major "--debug-log" targets are: compilation, module, sema, codegen, and link
 # requires debug mode or to set -Dlog=true on compiling Zig
 

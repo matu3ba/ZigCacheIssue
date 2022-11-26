@@ -2,9 +2,7 @@ const std = @import("std");
 const Complex = std.math.complex.Complex;
 
 const Allocator = std.mem.Allocator;
-
 const print = std.debug.print;
-
 pub fn Foo(comptime T: type) type {
     comptime var U: type = usize;
 
